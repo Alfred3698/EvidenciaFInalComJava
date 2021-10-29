@@ -47,8 +47,8 @@ public class Main {
             usuarios = new ArrayList<>();
         }
 
-        usuarios.add(new Usuario(1, "alfredo", "1234"));
-        usuarios.add(new Usuario(2, "alejandra", "1234")
+        usuarios.add(new Usuario(1, "Carlos", "0000"));
+        usuarios.add(new Usuario(2, "Sofia", "0000")
         );
         System.out.println("Los usuarios han sido cargados: " + usuarios.size());
 
