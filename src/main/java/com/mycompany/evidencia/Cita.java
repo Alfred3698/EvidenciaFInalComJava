@@ -15,7 +15,7 @@ public class Cita {
 
     private Integer id;
     private String nombreCita;
-    private Date fecha;
+    private String fecha;
     private Medico medico;
     private Paciente paciente;
 
@@ -35,11 +35,11 @@ public class Cita {
         this.nombreCita = nombreCita;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

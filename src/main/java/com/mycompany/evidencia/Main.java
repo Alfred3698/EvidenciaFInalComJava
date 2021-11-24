@@ -5,8 +5,11 @@
  */
 package com.mycompany.evidencia;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import java.awt.SystemColor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,7 +36,8 @@ public class Main {
         existeUsuario = validarCredenciales(usuario, contrasena);
         if (existeUsuario) {
             System.out.println("existe el usuario");
-            menu();
+            //menu();
+            load();
 
         } else {
             System.out.println("el usuario no existe");
@@ -64,7 +68,45 @@ public class Main {
                 + "3.Crear una cita\n"
                 + "4.Ver las citas de todos los medicos\n"
                 + "5.-Ver las citas por nombre del medico\n"
-                + "6.-Ver las citas por nombre del paciente\n");
+                + "6.-Ver las citas por nombre del paciente\n"
+                + "7.-Guardar cita");
+
+        Cita cita = new Cita();
+        Medico medico = new Medico();
+        Paciente paciente = new Paciente();
+        medico.setId(1);
+        medico.setNombre("Carlos");
+        medico.setEspecialida("General");
+        paciente.setId(1);
+        paciente.setNombre("Maria");
+        cita.setId(1);
+        cita.setNombreCita("Cita numero 1");
+        cita.setMedico(medico);
+        cita.setPaciente(paciente);
+        cita.setFecha("24/11/2021");
+        save(cita);
+
+    }
+
+    public static void save(Cita cita) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(cita);
+            System.out.println(json);
+        } catch (Exception e) {
+            System.out.println("Error->" + e.getMessage());
+        }
+
+        /*Guardar variable*/
+    }
+
+    public static void load() {
+        String json = "{\"id\":1,\"nombreCita\":\"Cita numero 1\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Carlos\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Maria\"}}";
+        System.out.println("load " + json);
+        Gson gson = new Gson();
+        Cita cita = gson.fromJson(json, Cita.class);
+
+        System.out.println("nombre del paciente:" + cita.getPaciente().getNombre());
     }
 
 }
