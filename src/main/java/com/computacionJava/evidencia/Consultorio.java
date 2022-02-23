@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author jajimenez
  */
-public class Main {
+public class Consultorio {
 
     public static List<Usuario> usuarios;
 
@@ -26,7 +26,7 @@ public class Main {
         Scanner credenciales = new Scanner(System.in);
         System.out.println("Cargando sistema... ");
         cargarUsuarios();
-        System.out.println("Inicio de sesion:");
+        System.out.println("-------------------------Inicio de sesion-----------------------");
         System.out.println("Usuario:");
         usuario = credenciales.nextLine();
         System.out.println("Contraseña");
@@ -50,8 +50,8 @@ public class Main {
         }
 
         usuarios.add(new Usuario(1, "carlos", "1234"));
-        usuarios.add(new Usuario(2, "sofia", "1234")
-        );
+        usuarios.add(new Usuario(2, "sofia", "1234"));
+        usuarios.add(new Usuario(2, "ithan", "0000"));
         System.out.println("Los usuarios han sido cargados: " + usuarios.size());
 
     }
