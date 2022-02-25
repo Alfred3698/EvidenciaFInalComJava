@@ -7,6 +7,9 @@ package com.computacionJava.evidencia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -74,6 +77,7 @@ public class ConsultorioMain {
                     + "6.-Ver las citas por nombre del paciente\n"
                     + "7.-Crear cita\n"
                     + "8.-ver todas las citas\n"
+                    + "9.-Guardar\n"
                     + "0.-Salir");
             System.out.println("Opción:");
             opcion = opcionScanner.nextInt();
@@ -85,17 +89,31 @@ public class ConsultorioMain {
                 case 8:
                     imprimirTodasCitas();
                     break;
+                case 9:
+                    save();
+                    break;
 
             }
         }
 
     }
 
-    public static void save(Cita cita) {
+    public static void save() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(cita);
+            String json = mapper.writeValueAsString(citas);
             System.out.println(json);
+            String ruta = "citas.json";
+
+            File file = new File(ruta);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(json);
+            bw.close();
         } catch (Exception e) {
             System.out.println("Error->" + e.getMessage());
         }
@@ -104,16 +122,15 @@ public class ConsultorioMain {
     }
 
     public static void cargarCita() {
-        String json = "{\"id\":1,\"nombreCita\":\"Cita numero 1\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Carlos\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Maria\"}}";
-        System.out.println("load " + json);
+        String json = "[{\"id\":1,\"nombreCita\":\"Cita numero 1\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Carlos\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Maria\"}},{\"id\":1,\"nombreCita\":\"Cita numero 2\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Roberto\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Arturo\"}}]";
         Gson gson = new Gson();
-        Cita cita = gson.fromJson(json, Cita.class);
-        citas.add(cita);
-        json = "{\"id\":1,\"nombreCita\":\"Cita numero 2\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Roberto\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Arturo\"}}";
-        System.out.println("load " + json);
-        cita = gson.fromJson(json, Cita.class);
-        citas.add(cita);
-        System.out.println("nombre del paciente:" + cita.getPaciente().getNombre());
+        Cita[] cita = gson.fromJson(json, Cita[].class);
+        //citas.add(cita);
+        //System.out.println("nombre del paciente:" + cita.getPaciente().getNombre());
+        for (Cita temp : cita) {
+            citas.add(temp);
+        }
+        System.out.println("Hola mundo");
     }
 
     public static void imprimirTodasCitas() {
@@ -126,6 +143,7 @@ public class ConsultorioMain {
     }
 
     public static void crearCita() {
+
         Cita cita = new Cita();
         Medico medico = new Medico();
         Paciente paciente = new Paciente();

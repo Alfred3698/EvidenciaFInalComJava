@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "nombreCita": "Cita numero 1",
+        "fecha": "24/11/2021",
+        "medico": {
+            "id": 1,
+            "nombre": "Carlos",
+            "especialida": "General"
+        },
+        "paciente": {
+            "id": 1,
+            "nombre": "Maria"
+        }
+    },
+    {
+        "id": 1,
+        "nombreCita": "Cita numero 2",
+        "fecha": "24/11/2021",
+        "medico": {
+            "id": 1,
+            "nombre": "Roberto",
+            "especialida": "General"
+        },
+        "paciente": {
+            "id": 1,
+            "nombre": "Arturo"
+        }
+    }
+]
