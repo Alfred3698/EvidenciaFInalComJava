@@ -7,9 +7,12 @@ package com.computacionJava.evidencia;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +26,7 @@ public class ConsultorioMain {
     public static List<Usuario> usuarios;
     public static List<Cita> citas = new ArrayList();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         boolean existeUsuario;
         String usuario = "";
         String contrasena = "";
@@ -121,8 +124,8 @@ public class ConsultorioMain {
         /*Guardar variable*/
     }
 
-    public static void cargarCita() {
-        String json = "[{\"id\":1,\"nombreCita\":\"Cita numero 1\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Carlos\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Maria\"}},{\"id\":1,\"nombreCita\":\"Cita numero 2\",\"fecha\":\"24/11/2021\",\"medico\":{\"id\":1,\"nombre\":\"Roberto\",\"especialida\":\"General\"},\"paciente\":{\"id\":1,\"nombre\":\"Arturo\"}}]";
+    public static void cargarCita() throws IOException {
+        String json = leerArchivo();
         Gson gson = new Gson();
         Cita[] cita = gson.fromJson(json, Cita[].class);
         //citas.add(cita);
@@ -159,6 +162,19 @@ public class ConsultorioMain {
         cita.setFecha("24/11/2021");
         //save(cita);
         citas.add(cita);
+    }
+
+    public static String leerArchivo() throws IOException {
+        String archivo = "citas.json";
+        FileReader f = new FileReader(archivo);
+        BufferedReader b = new BufferedReader(f);
+        StringBuilder json = new StringBuilder();
+        String cadena;
+        while ((cadena = b.readLine()) != null) {
+            json.append(cadena);
+        }
+        b.close();
+        return json.toString();
     }
 
 }
